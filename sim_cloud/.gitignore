@@ -1,0 +1,2 @@
+echo "*.log" >> .gitignore
+echo "sim_cloud/logs/" >> .gitignore
