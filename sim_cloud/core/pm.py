@@ -47,16 +47,17 @@ class PM:
             # )
             return False
         
-        logger.debug(
-            f"[ACCEPTABLE] PM {self.id} can host VM {vm.id} at t={t}"
-        )
+        # logger.debug(
+        #     f"[ACCEPTABLE] PM {self.id} can host VM {vm.id} at t={t}"
+        # )
         return True
     
     def add_vm(self, vm):
         
-        print ("AAAAAAAAAAAAAAAAAAAAAAdd successfullyyyyyyyyyyyyyyyyy")
+        
         vm.pm_id = self.id
         self.vms.append(vm)
+        # logger.debug("Successfully")
         
 
     def remove_finished_vms(self, t):

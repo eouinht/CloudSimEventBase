@@ -1,5 +1,6 @@
 
 from log.logger import SimLogger
+import torch
 
 logger = SimLogger.get_logger("STATE")
 
@@ -24,7 +25,7 @@ class SimulationState:
             logger.error(f"PM {pm.id} already exists")
             raise ValueError(f"Duplicate PM id {pm.id}")
         self.pms[pm.id] = pm
-        logger.info(f"PM added: {pm.id}")
+        # logger.info(f"PM added: {pm.id}")
         
     def get_pm(self, pm_id):
         return self.pms.get(pm_id, None)
@@ -88,7 +89,7 @@ class SimulationState:
             return
 
         self.finished_vms[vm_id] = vm
-        logger.info(f"VM finished: {vm_id}")
+        # logger.info(f"VM finished: {vm_id}")
     
     def snapshot(self):
         """
@@ -100,3 +101,34 @@ class SimulationState:
             "num_running_vms": len(self.running_vms),
             "num_finished_vms": len(self.finished_vms),
         }
+    
+    def get_feature_matrix(self, t):
+        
+        """
+        Trích xuất đặc trưng của toàn bộ cụm PM tại thời điểm t.
+        Ma trận trả về luôn có kích thước (Số lượng PM x Số đặc trưng).
+        ví dụ: [30, 3] (30 PMs, mỗi máy 3 thông số).
+        """
+        # Chuyển Dict thành List để đảm bảo thứ tự PM không đổi trong một phiên chạy
+        pm = sorted(self.pms.values(),key = lambda x: x.id)
+        matrix = []
+        
+        for pm in self.pms:
+            cpu_usage = 0
+            mem_usage = 0
+            young_vms = 0
+            for vm in pm.vms:
+                cpu_usage += vm.cpu_demand(t) 
+                mem_usage += vm.memory
+                if (t - vm.created_at) <= 8:
+                    young_vms += 1
+                    
+                features = [
+                    cpu_usage/pm.cpu_cap,   # Tỉ lệ sử dụng CPU thực tế
+                    mem_usage/pm.mem_cap,   # Tỉ lệ RAM đã cấp phát
+                    young_vms/10.0,            # Mật độ VM (đã chuẩn hóa)
+                    
+                ]
+                matrix.append(features)
+            
+        return torch.tensor(matrix, dtype=torch.float32)

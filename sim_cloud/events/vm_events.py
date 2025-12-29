@@ -29,9 +29,9 @@ class CreateVMEvent(VMEvent):
         if vm_id not in state.pending_vms:
             state.add_pending_vm(self.vm) 
             
-        logger.info(
-            f"VM {self.vm.id} created (pending) at t={self.time}"
-        )
+        # logger.info(
+        #     f"VM {self.vm.id} created (pending) at t={self.time}"
+        # )
         return True
     
 class EmbededVMEvent(VMEvent):
@@ -87,9 +87,9 @@ class FinishVMEvent(VMEvent):
             if pm is not None:
                 pm.remove_finished_vms(self.time)
             state.finish_vm(self.vm_id)
-            logger.info(
-                f"VM {self.vm_id} finished (running → finished) at t={self.time}"
-            )
+            # logger.info(
+            #     f"VM {self.vm_id} finished (running → finished) at t={self.time}"
+            # )
             return True
 
         logger.warning(
@@ -128,8 +128,8 @@ class MigrateVMEvent(VMEvent):
         dst_pm.add_vm(vm)
         vm.pm_id = self.target_pm_id
 
-        logger.info(
-            f"VM {vm.id} migrated {src_pm.id if src_pm else 'None'} -> "
-            f"{self.target_pm_id} at t={self.time}"
-        )
+        # logger.info(
+        #     f"VM {vm.id} migrated {src_pm.id if src_pm else 'None'} -> "
+        #     f"{self.target_pm_id} at t={self.time}"
+        # )
         return True

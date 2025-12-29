@@ -24,11 +24,11 @@ class VM:
         if idx < 0:
             return 0.0
 
-        if idx >= len(self.vm_util):
-            logger.warning(
-                f"VM {self.id} vm_util length < duration "
-                f"(idx={idx}, len={len(self.vm_util)})"
-            )
-            return 0.0
+        # if idx >= len(self.vm_util):
+        #     logger.warning(
+        #         f"VM {self.id} vm_util length < duration "
+        #         f"(idx={idx}, len={len(self.vm_util)})"
+        #     )
+        #     return 0.0
 
         return self.vm_util[idx]
