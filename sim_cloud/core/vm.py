@@ -13,22 +13,25 @@ class VM:
         self.pm_id = None
         self.start_time = created_at
         self.end_time = created_at + duration
+        print(f"==================end time {self.end_time}================")
 
     def is_active(self, t):
-        active = self.created_at <= t < (self.created_at + self.duration)
+        
+        active = self.created_at <= t <= (self.created_at + self.duration)
         # logger.debug(f"VM {self.id} active at t={t}: {active}")
         return active
 
     def cpu_demand(self, t):
         idx = t - self.start_time
+        
         if idx < 0:
             return 0.0
 
-        # if idx >= len(self.vm_util):
-        #     logger.warning(
-        #         f"VM {self.id} vm_util length < duration "
-        #         f"(idx={idx}, len={len(self.vm_util)})"
-        #     )
-        #     return 0.0
+        if idx > self.duration:
+            logger.warning(
+                f"VM {self.id} vm_util length < duration "
+                f"(idx={idx}, duration={self.duration})"
+            )
+            return 0.0
 
-        return self.vm_util[idx]
+        return self.vm_util[idx-1]

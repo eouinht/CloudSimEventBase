@@ -34,7 +34,7 @@ class Simulator:
             
             time, _, _ = self.event_queue[0]
             self.state.set_time(time)        
-            
+            logger.info(f" ========================= Time = {time} ==========================")
           
             # ===== PHASE 1: lấy toàn bộ event cùng time =====
             same_time_events = []

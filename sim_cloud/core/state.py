@@ -45,7 +45,7 @@ class SimulationState:
         
         
         vm_check = vm.id
-        print(f"VM-CHECK {vm_check}") 
+        # print(f"VM-CHECK {vm_check}") 
         
         if vm_check not in self.pending_vms:
             raise ValueError(f"Vm {vm_check} does not exist")
@@ -56,18 +56,18 @@ class SimulationState:
             raise ValueError(f"PM {pm_id} does not exist")
         
         
-        vm.start_time = self.current_time
-        vm.end_time = self.current_time + vm.duration
+        # vm.start_time = self.current_time
+        # vm.end_time = self.current_time + vm.duration
         vm.pm_id = pm_id
         
         pm.add_vm(vm)
-        print("herrrrrreeeeee")
+        # print("herrrrrreeeeee")
         
         del self.pending_vms[vm_check]
         
         self.running_vms[vm.id] = vm
         
-        logger.info(f"VM {vm.id} placed on PM {pm_id}")
+        # logger.info(f"VM {vm.id} placed on PM {pm_id}")
     # def start_vm(self, vm):
     #     if vm.id in self.running_vms:
     #         return
@@ -89,7 +89,7 @@ class SimulationState:
             return
 
         self.finished_vms[vm_id] = vm
-        # logger.info(f"VM finished: {vm_id}")
+        logger.info(f"VM finished: {vm_id} at {self.current_time} with expect {vm.end_time}")
     
     def snapshot(self):
         """
