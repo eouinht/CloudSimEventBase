@@ -1,7 +1,7 @@
 ## Project title
 SimCloud: A Cloud-Based Simulation Platform
 ## Overview
-SimCloud is a cloud-based platform designed to facilitate the execution and management of large-scale simulations. It provides users with the ability to run simulations on distributed computing resources, enabling faster processing times and scalability.
+SimCloud is a cloud-based platform designed to facilitate the execution and management of large-scale simulations. 
 ## Structure
 The project is organized into the following main directories:
 - 'core': Contains the core functionalities of the SimCloud platform, including: pm, vm and sate.
